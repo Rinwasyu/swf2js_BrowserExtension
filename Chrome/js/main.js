@@ -1,6 +1,6 @@
 let embed = document.getElementsByTagName("embed");
 
-for (let i=0; i<embed.length; i++) {
+for (let i=embed.length-1; i>=0; i--) {
     let container = document.createElement("div");
     container.id = "swfjs_be-"+i;
     container.style = "display:inline-block;width:" + embed[i].width + ";height:" + embed[i].height;
