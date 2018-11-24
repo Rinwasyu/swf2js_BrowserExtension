@@ -1,10 +1,24 @@
-let embed = document.getElementsByTagName("embed");
+let embedElement = document.getElementsByTagName("embed");
+let objectElement = document.getElementsByTagName("object");
 
-for (let i=embed.length-1; i>=0; i--) {
-    let container = document.createElement("div");
-    container.id = "swfjs_be-"+i;
-    container.style = "display:inline-block;width:" + embed[i].width + ";height:" + embed[i].height;
-    embed[i].parentNode.insertBefore(container, embed[i]);
-    swf2js.load(embed[i].src, {tagId: container.id});
-    embed[i].parentNode.removeChild(embed[i]);
+for (let i = embedElement.length - 1; i >= 0; i--) {
+    if (embedElement[i].type == "application/x-shockwave-flash") {
+        let container = document.createElement("div");
+        container.id = "swfjs_be-e" + i;
+        container.style = "display:inline-block;width:" + embedElement[i].width + ";height:" + embedElement[i].height;
+        embedElement[i].parentNode.insertBefore(container, embedElement[i]);
+        swf2js.load(embedElement[i].src, {tagId: container.id});
+        embedElement[i].parentNode.removeChild(embedElement[i]);
+    }
+}
+
+for (let i = objectElement.length - 1; i >= 0; i--) {
+    if (objectElement[i].type == "application/x-shockwave-flash") {
+        let container = document.createElement("div");
+        container.id = "swfjs_be-o" + i;
+        container.style = "display:inline-block;width:" + objectElement[i].width + ";height:" + objectElement[i].height;
+        objectElement[i].parentNode.insertBefore(container, objectElement[i]);
+        swf2js.load(objectElement[i].data, {tagId: container.id});
+        objectElement[i].parentNode.removeChild(objectElement[i]);
+    }
 }
