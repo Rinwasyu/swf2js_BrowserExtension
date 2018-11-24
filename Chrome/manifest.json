@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+    "name": "swf2.js Flash Player Extension",
+    "version": "0.1.0",
+    "description": "Play embedded flash video.",
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/swf2js.js", "js/main.js"]
+        }
+    ]
+}
