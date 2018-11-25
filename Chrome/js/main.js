@@ -2,23 +2,39 @@ let embedElement = document.getElementsByTagName("embed");
 let objectElement = document.getElementsByTagName("object");
 
 for (let i = embedElement.length - 1; i >= 0; i--) {
-    if (embedElement[i].type == "application/x-shockwave-flash") {
+    let src = embedElement[i].src;
+    let type = embedElement[i].type;
+    if (type == "application/x-shockwave-flash" || src.split(".")[src.split(".").length - 1] == "swf") {
         let container = document.createElement("div");
+        let width = embedElement[i].width;
+        let height = embedElement[i].height;
         container.id = "swfjs_be-e" + i;
-        container.style = "display:inline-block;width:" + embedElement[i].width + "px;height:" + embedElement[i].height + "px;";
+        if (!isNaN(width) && !isNaN(height)) {
+            width += "px";
+            height += "px";
+        }
+        container.style = "display:inline-block;width:" + width + ";height:" + height;
         embedElement[i].parentNode.insertBefore(container, embedElement[i]);
-        swf2js.load(embedElement[i].src, {tagId: container.id});
+        swf2js.load(src, {tagId: container.id});
         embedElement[i].parentNode.removeChild(embedElement[i]);
     }
 }
 
 for (let i = objectElement.length - 1; i >= 0; i--) {
-    if (objectElement[i].type == "application/x-shockwave-flash") {
+    let src = objectElement[i].data;
+    let type = objectElement[i].type;
+    if (type == "application/x-shockwave-flash" || src.split(".")[src.split(".").length - 1] == "swf") {
         let container = document.createElement("div");
+        let width = objectElement[i].width;
+        let height = objectElement[i].height;
         container.id = "swfjs_be-o" + i;
-        container.style = "display:inline-block;width:" + objectElement[i].width + "px;height:" + objectElement[i].height + "px;";
+        if (!isNaN(width) && !isNaN(height)) {
+            width += "px";
+            height += "px";
+        }
+        container.style = "display:inline-block;width:" + width + ";height:" + height;
         objectElement[i].parentNode.insertBefore(container, objectElement[i]);
-        swf2js.load(objectElement[i].data, {tagId: container.id});
+        swf2js.load(src, {tagId: container.id});
         objectElement[i].parentNode.removeChild(objectElement[i]);
     }
 }
